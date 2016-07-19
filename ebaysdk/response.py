@@ -26,7 +26,7 @@ class ResponseDataObject(object):
         return str(self)
 
     def __str__(self):
-        return str(json.load(json.dump(self.__dict__)))#so the results can go stright in to tinydb
+        return str(json.load(json.dumps(self.__dict__)))#so the results can go stright in to tinydb
 
     def has_key(self, name):
         try:
