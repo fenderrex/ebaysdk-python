@@ -26,7 +26,7 @@ class ResponseDataObject(object):
         return str(self)
 
     def __str__(self):
-        return "%s" % self.__dict__
+        return str(json.load(json.dump(self.__dict__)))#so the results can go stright in to tinydb
 
     def has_key(self, name):
         try:
@@ -52,10 +52,6 @@ class ResponseDataObject(object):
         setattr(self, name, value)
 
     def _load_dict(self, mydict, datetime_nodes):
-        if sys.version_info[0] >= 3:
-            datatype = bytes
-        else:
-            datatype = unicode
         
         for a in mydict.items():
 
@@ -66,7 +62,7 @@ class ResponseDataObject(object):
             elif isinstance(a[1], list):
                 objs = []
                 for i in a[1]:
-                    if i is None or isinstance(i, str) or isinstance(i, datatype):
+                    if i is None or isinstance(i, str) or isinstance(i, unicode):
                         objs.append(i)
                     else:
                         objs.append(ResponseDataObject(i, datetime_nodes))
