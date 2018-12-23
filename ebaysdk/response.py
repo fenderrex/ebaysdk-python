@@ -21,12 +21,15 @@ class ResponseDataObject(object):
 
     def __init__(self, mydict, datetime_nodes=[]):
         self._load_dict(mydict, list(datetime_nodes))
+   
+    def toJson(self):
+        return json.dumps(self.__dict__)
 
-    def __repr__(self):
-        return str(self)
+    def __repr__(self):#added for robust API suport
+        return self.toJson()
 
     def __str__(self):
-        return str(json.load(json.dumps(self.__dict__)))#so the results can go stright in to tinydb
+        return self.toJson()
 
     def has_key(self, name):
         try:
